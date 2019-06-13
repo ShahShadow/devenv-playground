@@ -1,0 +1,34 @@
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+
+# This com_google_protobuf repository is required for proto_library rule.
+# It provides the protocol compiler binary (i.e., protoc).
+http_archive(
+    name = "com_google_protobuf",
+    strip_prefix = "protobuf-3.8.0",
+    urls = ["https://github.com/protocolbuffers/protobuf/archive/v3.8.0.tar.gz"],
+)
+
+# This com_google_protobuf_cc repository is required for cc_proto_library
+# rule. It provides protobuf C++ runtime. Note that it actually is the same
+# repo as com_google_protobuf but has to be given a different name as
+# required by bazel.
+http_archive(
+    name = "com_google_protobuf_cc",
+    strip_prefix = "protobuf-3.8.0",
+    urls = ["https://github.com/protocolbuffers/protobuf/archive/v3.8.0.tar.gz"],
+)
+
+# bazel-skylib 0.8.0 released 2019.03.20 (https://github.com/bazelbuild/bazel-skylib/releases/tag/0.8.0)
+skylib_version = "0.8.0"
+http_archive(
+    name = "bazel_skylib",
+    type = "tar.gz",
+    url = "https://github.com/bazelbuild/bazel-skylib/releases/download/{}/bazel-skylib.{}.tar.gz".format (skylib_version, skylib_version),
+    sha256 = "2ef429f5d7ce7111263289644d233707dba35e39696377ebab8b0bc701f7818e",
+)
+
+load("@com_google_protobuf//:protobuf_deps.bzl", "protobuf_deps")
+protobuf_deps()
+
+load("@bazel_skylib//lib:versions.bzl", "versions")
+versions.check(minimum_bazel_version = "0.5.4")
