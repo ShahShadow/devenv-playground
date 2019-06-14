@@ -38,8 +38,9 @@ cc_binary(
 	name = "testapi-server",
 	srcs = ["testapi-server.cc"],
 	deps = [
-		"@com_github_grpc_grpc//:grpc++",
+		"@com_github_grpc_grpc//:grpc++_reflection",
 		":testapi_cc_grpc"
 	],
 )
+
 

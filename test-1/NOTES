@@ -1,0 +1,5 @@
+In order to involve gRPC command line client:
+bazel run @com_github_grpc_grpc//test/cpp/util:grpc_cli -- call localhost:50051 SayHello "name:'gRPC'"
+bazel run @com_github_grpc_grpc//test/cpp/util:grpc_cli -- ls localhost:50051 Greeter -l
+bazel run @com_github_grpc_grpc//test/cpp/util:grpc_cli -- parse localhost:50051 HelloRequest "name:'gRPC'"
+bazel run @com_github_grpc_grpc//test/cpp/util:grpc_cli -- type localhost:50051 HelloRequest
