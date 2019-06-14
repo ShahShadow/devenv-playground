@@ -28,6 +28,20 @@
                 "reveal": "always",
                 "panel": "new"
             }
+        },
+        {
+            "label": "bazel-run-testapi-server",
+            "type": "shell",
+            "command": "cd ${workspaceFolder}/test-1 && ${workspaceFolder}/exec bazel run :testapi-server",
+            "group": {
+                "kind": "run",
+                "isDefault": true
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            },
+            "problemMatcher": []
         }
     ]
 }

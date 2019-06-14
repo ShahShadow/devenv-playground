@@ -1,0 +1,2 @@
+startup --output_user_root=/workspaces/bazel-test/.bazel_cache/admin
+build --color=yes --disk_cache=/workspaces/bazel-test/.bazel_cache

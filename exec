@@ -1,3 +1,4 @@
 #!/bin/bash -xe
 
-docker container run --rm -it --name=bazel-test --user admin:admin -w /workspaces/bazel-test/test-1 -v ~/workspaces:/workspaces bazel-test-1:latest "$@"
+#docker container run --rm -it --name=bazel-test --user admin:admin -w /workspaces/bazel-test/test-1 -v ~/workspaces:/workspaces bazel-test-1:latest "$@"
+docker container start bazel-test && docker container exec -w /workspaces/bazel-test/test-1 bazel-test $@

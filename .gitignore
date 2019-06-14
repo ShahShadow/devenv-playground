@@ -1,1 +1,3 @@
 .vscode/ipch/
+**/bazel-*
+.bazel_cache
