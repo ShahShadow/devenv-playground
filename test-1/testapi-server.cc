@@ -7,13 +7,13 @@
 #include <grpcpp/server_context.h>
 #include <grpcpp/security/server_credentials.h>
 
+#include "base/string/format.h"
 #include "testapi.grpc.pb.h"
 
 class TestApiServerImpl final : public Greeter::Service {
      grpc::Status SayHello(grpc::ServerContext* context, const HelloRequest* request,
-                  HelloResponse* reply) override {
-     std::string prefix("Hello ");
-    reply->set_message(prefix + request->name());
+                  HelloResponse* reply) override {     
+    reply->set_message(FormatString("Hello %s", request->name()));
     return grpc::Status::OK;
   }
 };
