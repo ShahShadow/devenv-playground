@@ -32,7 +32,7 @@
         {
             "label": "bazel-run-testapi-server",
             "type": "shell",
-            "command": "cd ${workspaceFolder}/test-1 && ${workspaceFolder}/exec bazel run :testapi-server",
+            "command": "cd ${workspaceFolder}/test-1 && ${workspaceFolder}/exec bazel run :testapi-server '-- --logtostderr=1'",
             "group": {
                 "kind": "run",
                 "isDefault": true

@@ -2,6 +2,7 @@
 #include <string>
 
 #include <gflags/gflags.h>
+#include <glog/logging.h>
 
 #include <grpc/grpc.h>
 #include <grpcpp/server.h>
@@ -58,7 +59,7 @@ class TestApiAsyncServerImpl final {
     cq_ = builder.AddCompletionQueue();
     // Finally assemble the server.
     server_ = builder.BuildAndStart();
-    std::cout << "Server listening on " << server_address << std::endl;
+    LOG(INFO) << "Server listening on " << server_address << std::endl;
 
     // Proceed to the server's main loop.
     HandleRpcs();
@@ -161,14 +162,14 @@ class TestApiAsyncServerImpl final {
 
 
 int RunAsync() {
-  std::cout << "Bringing up async server" << std::endl;
+  LOG(INFO) << "Bringing up async server" << std::endl;
 	TestApiAsyncServerImpl server;
   server.Run();
   return 0;
 }
 
 int RunSync() {
-  std::cout << "Bringing up server" << std::endl;
+  LOG(INFO) << "Bringing up server" << std::endl;
 	 std::string server_address = FormatString("0.0.0.0:%ld", FLAGS_port);
   TestApiServerImpl service;
 
@@ -180,7 +181,7 @@ int RunSync() {
   builder.RegisterService(&service);
   // Finally assemble the server.
   std::unique_ptr<grpc::Server> server(builder.BuildAndStart());
-  std::cout << "Server listening on " << server_address << std::endl;
+  LOG(INFO) << "Server listening on " << server_address << std::endl;
 
   // Wait for the server to shutdown. Note that some other thread must be
   // responsible for shutting down the server for this call to ever return.
@@ -188,7 +189,13 @@ int RunSync() {
   return 0;
 }
 
-int main(int argc, char const *argv[])
+int main(int argc, char** argv)
 {   
+  // Initialize Google's logging library.
+  google::InitGoogleLogging(argv[0]);
+
+  // Optional: parse command line flags
+  gflags::ParseCommandLineFlags(&argc, &argv, true);
+
 	return RunSync();
 }

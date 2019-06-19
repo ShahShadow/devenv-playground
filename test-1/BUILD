@@ -42,9 +42,11 @@ cc_binary(
 	deps = [
         "@com_github_gflags_gflags//:gflags",
 		"@com_github_grpc_grpc//:grpc++_reflection",
+        "@com_github_google_glog//:glog",
 		":testapi_cc_grpc",
         "//base",
 	],
+    args = ["--logtostderr=1"],
 )
 
 
