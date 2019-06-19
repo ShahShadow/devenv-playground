@@ -1,6 +1,8 @@
 #include <iostream>
 #include <string>
 
+#include <gflags/gflags.h>
+
 #include <grpc/grpc.h>
 #include <grpcpp/server.h>
 #include <grpcpp/server_builder.h>
@@ -9,6 +11,8 @@
 
 #include "base/string/format.h"
 #include "testapi.grpc.pb.h"
+
+DEFINE_int64(port, 50051, "The port number to use for server.");
 
 class TestApiServerImpl final : public Greeter::Service {
      grpc::Status SayHello(grpc::ServerContext* context, const HelloRequest* request,
@@ -41,7 +45,7 @@ class TestApiAsyncServerImpl final {
 
 // There is no shutdown handling in this code.
   void Run() {
-    std::string server_address("0.0.0.0:50051");
+    std::string server_address = FormatString("0.0.0.0:%ld", FLAGS_port);
 
     grpc::ServerBuilder builder;
     // Listen on the given address without any authentication mechanism.
@@ -165,7 +169,7 @@ int RunAsync() {
 
 int RunSync() {
   std::cout << "Bringing up server" << std::endl;
-	 std::string server_address("0.0.0.0:50051");
+	 std::string server_address = FormatString("0.0.0.0:%ld", FLAGS_port);
   TestApiServerImpl service;
 
   grpc::ServerBuilder builder;
